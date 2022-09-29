@@ -1,0 +1,74 @@
+#ifndef __SENSER_H
+#define __SENSER_H
+
+#include "Arduino.h"
+
+#define TRIG 13
+#define ECHO 12
+#define TRIG1 11
+#define ECHO1 10
+
+void SenserInit(void);
+long ReadSenser1(void);
+long ReadSenser2(void);
+
+#endif // __SENSER_H
+#ifndef __MOTOR_H
+#define __MOTOR_H
+
+#include "Arduino.h"
+#define Front 3
+#define Back 4
+#define PWM 5
+
+void motorsetup(void);
+void motorstart(void);
+void motorstop(void);
+
+#endif // __MOTOR_H
+#include "senser.h"
+
+void SenserInit(void)
+{
+  pinMode(TRIG, OUTPUT);
+  pinMode(ECHO, INPUT);
+  pinMode(TRIG1, OUTPUT);
+  pinMode(ECHO1, INPUT);
+}
+
+long ReadSenser1(void)
+{
+  long duration;
+  long distance;
+  
+  digitalWrite(TRIG, HIGH);
+  delayMicroseconds(2);
+  
+  digitalWrite(TRIG, HIGH);
+  delayMicroseconds(10);
+  digitalWrite(TRIG, LOW);
+
+  duration = pulseIn(ECHO, HIGH);
+  distance = duration / 58.2;
+
+  return distance;
+  
+}
+long ReadSenser2(void)
+{
+  long duration1;
+  long distance1;
+  
+  digitalWrite(TRIG1, HIGH);
+  delayMicroseconds(2);
+  
+  digitalWrite(TRIG1, HIGH);
+  delayMicroseconds(10);
+  digitalWrite(TRIG1, LOW);
+
+  duration1 = pulseIn(ECHO1, HIGH);
+  distance1 = duration1 / 58.2;
+
+  return distance1;
+  
+}
